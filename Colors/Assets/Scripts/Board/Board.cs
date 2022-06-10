@@ -22,6 +22,7 @@ public class Board : MonoBehaviour
 
     public void InitSequence(){
         LoadFloors();
+        Debug.Log("Foram criados " + tiles.Count + " tiles");
     }
     
     void LoadFloors(){
@@ -37,7 +38,7 @@ public class Board : MonoBehaviour
 
     void CreateTile(Vector3Int pos, Floor floor){
         Vector3 worldPos = grid.CellToWorld(pos);
-        worldPos.y += (floor.tilemap.tileAnchor.y/2) - 0.5f;
+        worldPos.y += (floor.tilemap.tileAnchor.y/2);
         TileLogic tileLogic = new TileLogic(pos, worldPos, floor);
         tiles.Add(pos, tileLogic);
     }
