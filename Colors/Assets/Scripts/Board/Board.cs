@@ -38,8 +38,14 @@ public class Board : MonoBehaviour
 
     void CreateTile(Vector3Int pos, Floor floor){
         Vector3 worldPos = grid.CellToWorld(pos);
-        worldPos.y += (floor.tilemap.tileAnchor.y/2);
+        worldPos.y += (floor.tilemap.tileAnchor.y/2) + 0.5f;
         TileLogic tileLogic = new TileLogic(pos, worldPos, floor);
         tiles.Add(pos, tileLogic);
+    }
+
+    public static TileLogic GetTile(Vector3Int pos){
+        TileLogic tile = null;
+        instance.tiles.TryGetValue(pos, out tile);
+        return tile;
     }
 }
