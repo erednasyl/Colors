@@ -66,7 +66,6 @@ public class Movement : MonoBehaviour
         }
 
         tempTime = 0;
-        
         while(jumper.localPosition!=startPos){
             tempTime += Time.deltaTime;
             float perc = tempTime/(totalTime/2);
