@@ -10,49 +10,117 @@ public class Movement : MonoBehaviour
     SpriteRenderer SR;
     Transform jumper;
     TileLogic currTile;
+    TileLogic t;
 
     void Start(){
         jumper = transform.Find("Jumper");
         SR = GetComponentInChildren<SpriteRenderer>();
+
+        t = Board.instance.tiles[goal];
+        //Vector3 startPos = transform.position;
+        transform.position = t.worldPos;
     }
 
+float counter = 0f;
     void Update(){
-        if (Input.GetKeyDown(KeyCode.W)){
-            SR.sprite = spriteList[3];
-            goal.x += 1;
-            test = true;
+        counter+= Time.deltaTime;
+        if (Input.GetKey(KeyCode.W)){
+            if (counter >= 0.2f)
+            {
+                SR.sprite = spriteList[3];
+                if (Input.GetKey(KeyCode.A)){
+                    SR.sprite = spriteList[4];
+                    goal.y+=1;
+                }
+                if (Input.GetKey(KeyCode.D)){
+                    SR.sprite = spriteList[2];
+                    goal.y-=1;
+                }
+                goal.x += 1;    
+                counter = 0;                
+                t = Board.instance.tiles[goal];
+                //transform.position = t.worldPos;
+                LeanTween.move(transform.gameObject, t.worldPos, 0.2f);
+            }
         }
-        if (Input.GetKeyDown(KeyCode.A)){
-            SR.sprite = spriteList[5];
-            goal.y += 1;
-            test = true;
+        else if (Input.GetKey(KeyCode.A)){
+            if (counter >= 0.2f)
+            {
+                SR.sprite = spriteList[5];
+                if (Input.GetKey(KeyCode.W)){
+                    SR.sprite = spriteList[4];
+                    goal.x+=1;
+                }
+                if (Input.GetKey(KeyCode.S)){
+                    SR.sprite = spriteList[6];
+                    goal.x-=1;
+                }
+                goal.y += 1;    
+                counter = 0;                
+                t = Board.instance.tiles[goal];
+                LeanTween.move(transform.gameObject, t.worldPos, 0.2f);
+            }
         }
-        if (Input.GetKeyDown(KeyCode.S)){
-            SR.sprite = spriteList[7];
-            goal.x -= 1;
-            test = true;
+        else if (Input.GetKey(KeyCode.S)){
+            if (counter >= 0.2f)
+            {
+                SR.sprite = spriteList[7];
+                if (Input.GetKey(KeyCode.A)){
+                    SR.sprite = spriteList[6];
+                    goal.y+=1;
+                }
+                if (Input.GetKey(KeyCode.D)){
+                    SR.sprite = spriteList[0];
+                    goal.y-=1;
+                }
+                goal.x -= 1;    
+                counter = 0;                
+                t = Board.instance.tiles[goal];
+                LeanTween.move(transform.gameObject, t.worldPos, 0.2f);
+            }
         }
-        if (Input.GetKeyDown(KeyCode.D)){
-            SR.sprite = spriteList[1];
-            goal.y -= 1;
-            test = true;
+        else if (Input.GetKey(KeyCode.D)){
+            if (counter >= 0.2f)
+            {
+                SR.sprite = spriteList[1];
+                if (Input.GetKey(KeyCode.W)){
+                    SR.sprite = spriteList[2];
+                    goal.x+=1;
+                }
+                if (Input.GetKey(KeyCode.S)){
+                    SR.sprite = spriteList[0];
+                    goal.x-=1;
+                }
+                goal.y -= 1;    
+                counter = 0;                
+                t = Board.instance.tiles[goal];
+                LeanTween.move(transform.gameObject, t.worldPos, 0.2f);
+            }
         }
-
+        /*
         if (test){
             test = false;
             StopAllCoroutines();
             StartCoroutine(Move());
+        }*/
+    }
+    IEnumerator Move(Vector3 startPos, Vector3 endPos){
+        yield return null;
+        float totalTime = 1f;
+        float tempTime = 0;
+        float perc;
+        while (transform.position != endPos){
+            tempTime += Time.deltaTime;
+            perc = tempTime/totalTime;
+            transform.position = Vector3.Lerp(startPos, endPos, perc);
+            yield return null;
         }
     }
-
+/*
     IEnumerator Move(){
         yield return null;
-        TileLogic t = Board.instance.tiles[goal];
+        
         //transform.position = t.worldPos;
-
-        Vector3 startPos = transform.position;
-        Vector3 endPos = t.worldPos; //qual a diff de worldPos e pos?
-
         float totalTime = 0.2f;
         float tempTime = 0;
         float perc;
@@ -95,5 +163,5 @@ public class Movement : MonoBehaviour
             jumper.localPosition = Vector3.Lerp(halfwayPos, startPos, perc);
             yield return null;
         }
-    }
+    */
 } 
