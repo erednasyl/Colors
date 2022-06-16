@@ -6,6 +6,8 @@ public class Movement : MonoBehaviour
 {
     public Sprite[] spriteList;
     public bool test;
+    float moveSpeed = 0.2f;
+    float jumpHeight = 1f;
     public Vector3Int goal;
     SpriteRenderer SR;
     Transform jumper;
@@ -28,6 +30,7 @@ float counter = 0f;
             if (counter >= 0.2f)
             {
                 SR.sprite = spriteList[3];
+                currTile = Board.instance.tiles[goal];
                 if (Input.GetKey(KeyCode.A)){
                     SR.sprite = spriteList[4];
                     goal.y+=1;
@@ -40,13 +43,18 @@ float counter = 0f;
                 counter = 0;                
                 t = Board.instance.tiles[goal];
                 //transform.position = t.worldPos;
+                if (currTile.floor != t.floor){
+                    StartCoroutine(Jump(t));
+                }
                 LeanTween.move(transform.gameObject, t.worldPos, 0.2f);
             }
+           
         }
         else if (Input.GetKey(KeyCode.A)){
             if (counter >= 0.2f)
             {
                 SR.sprite = spriteList[5];
+                currTile = Board.instance.tiles[goal];
                 if (Input.GetKey(KeyCode.W)){
                     SR.sprite = spriteList[4];
                     goal.x+=1;
@@ -58,6 +66,9 @@ float counter = 0f;
                 goal.y += 1;    
                 counter = 0;                
                 t = Board.instance.tiles[goal];
+                if (currTile.floor != t.floor){
+                    StartCoroutine(Jump(t));
+                }
                 LeanTween.move(transform.gameObject, t.worldPos, 0.2f);
             }
         }
@@ -65,6 +76,7 @@ float counter = 0f;
             if (counter >= 0.2f)
             {
                 SR.sprite = spriteList[7];
+                currTile = Board.instance.tiles[goal];
                 if (Input.GetKey(KeyCode.A)){
                     SR.sprite = spriteList[6];
                     goal.y+=1;
@@ -76,6 +88,9 @@ float counter = 0f;
                 goal.x -= 1;    
                 counter = 0;                
                 t = Board.instance.tiles[goal];
+                if (currTile.floor != t.floor){
+                    StartCoroutine(Jump(t));
+                }
                 LeanTween.move(transform.gameObject, t.worldPos, 0.2f);
             }
         }
@@ -83,6 +98,7 @@ float counter = 0f;
             if (counter >= 0.2f)
             {
                 SR.sprite = spriteList[1];
+                currTile = Board.instance.tiles[goal];
                 if (Input.GetKey(KeyCode.W)){
                     SR.sprite = spriteList[2];
                     goal.x+=1;
@@ -94,74 +110,32 @@ float counter = 0f;
                 goal.y -= 1;    
                 counter = 0;                
                 t = Board.instance.tiles[goal];
+                if (currTile.floor != t.floor){
+                    StartCoroutine(Jump(t));
+                }
                 LeanTween.move(transform.gameObject, t.worldPos, 0.2f);
             }
         }
-        /*
-        if (test){
-            test = false;
-            StopAllCoroutines();
-            StartCoroutine(Move());
-        }*/
-    }
-    IEnumerator Move(Vector3 startPos, Vector3 endPos){
-        yield return null;
-        float totalTime = 1f;
-        float tempTime = 0;
-        float perc;
-        while (transform.position != endPos){
-            tempTime += Time.deltaTime;
-            perc = tempTime/totalTime;
-            transform.position = Vector3.Lerp(startPos, endPos, perc);
-            yield return null;
-        }
-    }
-/*
-    IEnumerator Move(){
-        yield return null;
-        
-        //transform.position = t.worldPos;
-        float totalTime = 0.2f;
-        float tempTime = 0;
-        float perc;
-
-        if (currTile == null){
-            currTile = t;
-        }
-        if (currTile.floor != t.floor){
-            StartCoroutine(Jump(t, totalTime));
-        }
-        while (transform.position != endPos){
-            tempTime += Time.deltaTime;
-            perc = tempTime/totalTime;
-            transform.position = Vector3.Lerp(startPos, endPos, perc);
-            yield return null;
-        }
-
-        SR.sortingOrder = t.contentOrder;
-        t.content = this.gameObject;
     }
 
-    IEnumerator Jump(TileLogic t, float totalTime){
-        Vector3 halfwayPos;
-        Vector3 startPos = halfwayPos = jumper.localPosition;
-        halfwayPos.y += 0.5f;
-        float tempTime = 0;
+    IEnumerator Jump(TileLogic to){
+        int id1 = LeanTween.move(transform.gameObject, to.worldPos, moveSpeed).id;
+        LeanTween.moveLocalY(jumper.gameObject, jumpHeight, moveSpeed*0.5f).setLoopPingPong(1).setEase(LeanTweenType.easeInOutQuad);
 
-        while (jumper.localPosition!=halfwayPos){
-            tempTime += Time.deltaTime;
-            float perc = tempTime/(totalTime/2);
-            jumper.localPosition = Vector3.Lerp(startPos, halfwayPos, perc);
+        float timeOrderUpdate = moveSpeed;
+        if (currTile.floor.tilemap.tileAnchor.y > to.floor.tilemap.tileAnchor.y){
+            timeOrderUpdate*=0.85f;
+        }else{
+            timeOrderUpdate*=0.2f;
+        }
+        yield return new WaitForSeconds(timeOrderUpdate);
+        currTile = to;
+        SR.sortingOrder = to.contentOrder;
+
+        while (LeanTween.descr(id1)!= null)
+        {
             yield return null;
         }
-
-        tempTime = 0;
-
-        while(jumper.localPosition!=startPos){
-            tempTime += Time.deltaTime;
-            float perc = tempTime/(totalTime/2);
-            jumper.localPosition = Vector3.Lerp(halfwayPos, startPos, perc);
-            yield return null;
-        }
-    */
+        to.content = this.gameObject;
+    }
 } 
