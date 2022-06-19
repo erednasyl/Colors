@@ -42,7 +42,6 @@ float counter = 0f;
                 goal.x += 1;    
                 counter = 0;                
                 t = Board.instance.tiles[goal];
-                //transform.position = t.worldPos;
                 if (currTile.floor != t.floor){
                     StartCoroutine(Jump(t));
                 }
