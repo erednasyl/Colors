@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LoadState : MonoBehaviour
+public class LoadState : State
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public override void Enter(){
+        StartCoroutine(LoadSequence());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    IEnumerator LoadSequence(){
+        yield return Board.instance.InitSequence(this);
+        //
+        //
+        yield return null;
+        StateMachineController.instance.ChangeTo<RoamState>();
     }
+
 }

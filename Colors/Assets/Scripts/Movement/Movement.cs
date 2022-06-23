@@ -14,6 +14,9 @@ public class Movement : MonoBehaviour
     TileLogic currTile;
     TileLogic t;
 
+    public Joystick joystick;
+    float counter = 0f;
+
     void Start(){
         jumper = transform.Find("Jumper");
         SR = GetComponentInChildren<SpriteRenderer>();
@@ -23,7 +26,100 @@ public class Movement : MonoBehaviour
         transform.position = t.worldPos;
     }
 
-float counter = 0f;
+    void Update(){
+        counter+= Time.deltaTime;
+        if (joystick.Vertical >= 0.2f){
+            if (counter >= 0.2f)
+            {
+                SR.sprite = spriteList[3];
+                currTile = Board.instance.tiles[goal];
+                if (joystick.Horizontal <= -0.2f){
+                    SR.sprite = spriteList[4];
+                    goal.y+=1;
+                }
+                if (joystick.Horizontal >= 0.2f){
+                    SR.sprite = spriteList[2];
+                    goal.y-=1;
+                }
+                goal.x += 1;    
+                counter = 0;                
+                t = Board.instance.tiles[goal];
+                if (currTile.floor != t.floor){
+                    StartCoroutine(Jump(t));
+                }
+                LeanTween.move(transform.gameObject, t.worldPos, 0.2f);
+            }
+           
+        }
+        else if (joystick.Horizontal <= -0.2f){
+            if (counter >= 0.2f)
+            {
+                SR.sprite = spriteList[5];
+                currTile = Board.instance.tiles[goal];
+                if (joystick.Vertical >= 0.2f){
+                    SR.sprite = spriteList[4];
+                    goal.x+=1;
+                }
+                if (joystick.Vertical <= -0.2f){
+                    SR.sprite = spriteList[6];
+                    goal.x-=1;
+                }
+                goal.y += 1;    
+                counter = 0;                
+                t = Board.instance.tiles[goal];
+                if (currTile.floor != t.floor){
+                    StartCoroutine(Jump(t));
+                }
+                LeanTween.move(transform.gameObject, t.worldPos, 0.2f);
+            }
+        }
+        else if (joystick.Vertical <= -0.2f){
+            if (counter >= 0.2f)
+            {
+                SR.sprite = spriteList[7];
+                currTile = Board.instance.tiles[goal];
+                if (joystick.Horizontal <= -0.2f){
+                    SR.sprite = spriteList[6];
+                    goal.y+=1;
+                }
+                if (joystick.Horizontal >= 0.2f){
+                    SR.sprite = spriteList[0];
+                    goal.y-=1;
+                }
+                goal.x -= 1;    
+                counter = 0;                
+                t = Board.instance.tiles[goal];
+                if (currTile.floor != t.floor){
+                    StartCoroutine(Jump(t));
+                }
+                LeanTween.move(transform.gameObject, t.worldPos, 0.2f);
+            }
+        }
+        else if (joystick.Horizontal >= 0.2f){
+            if (counter >= 0.2f)
+            {
+                SR.sprite = spriteList[1];
+                currTile = Board.instance.tiles[goal];
+                if (joystick.Vertical >= 0.2f){
+                    SR.sprite = spriteList[2];
+                    goal.x+=1;
+                }
+                if (joystick.Vertical <= -0.2f){
+                    SR.sprite = spriteList[0];
+                    goal.x-=1;
+                }
+                goal.y -= 1;    
+                counter = 0;                
+                t = Board.instance.tiles[goal];
+                if (currTile.floor != t.floor){
+                    StartCoroutine(Jump(t));
+                }
+                LeanTween.move(transform.gameObject, t.worldPos, 0.2f);
+            }
+        }
+    }
+
+/*
     void Update(){
         counter+= Time.deltaTime;
         if (Input.GetKey(KeyCode.W)){
@@ -116,7 +212,7 @@ float counter = 0f;
             }
         }
     }
-
+*/
     IEnumerator Jump(TileLogic to){
         int id1 = LeanTween.move(transform.gameObject, to.worldPos, moveSpeed).id;
         LeanTween.moveLocalY(jumper.gameObject, jumpHeight, moveSpeed*0.5f).setLoopPingPong(1).setEase(LeanTweenType.easeInOutQuad);
