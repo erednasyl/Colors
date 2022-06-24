@@ -9,6 +9,7 @@ public class InputController : MonoBehaviour
     int v;
     float counter = 0f;
     float cooldownTimer = 0.2f;
+    Touch t;
 
     public static InputController instance;
     
@@ -26,43 +27,43 @@ public class InputController : MonoBehaviour
     {
         counter+= Time.deltaTime;
         if (counter >= cooldownTimer){
-            if (joystick.Vertical >= 0.4f){
+            if (joystick.Vertical >= 0.2f){
                 v = 1;
                 h = 1;
-                if (joystick.Horizontal >= 0.4f){
+                if (joystick.Horizontal >= 0.2f){
                     v=0;
                 }
-                else if(joystick.Horizontal <= -0.4f){
+                else if(joystick.Horizontal <= -0.2f){
                     h=0;
                 }
                 counter = 0;
             }
-            else if (joystick.Vertical <= -0.4f){
+            else if (joystick.Vertical <= -0.2f){
                 v = -1;
                 h = -1;
-                if (joystick.Horizontal >= 0.4f){
+                if (joystick.Horizontal >= 0.2f){
                     h=0;
                 }
-                else if(joystick.Horizontal <= -0.4f){
+                else if(joystick.Horizontal <= -0.2f){
                     v=0;
                 }
                 counter = 0;
             }
-            else if (joystick.Horizontal >= 0.4f){
+            else if (joystick.Horizontal >= 0.2f){
                 v = -1;
                 h = 1;
-                if (joystick.Vertical >= 0.4f){
+                if (joystick.Vertical >= 0.2f){
                     v=0;
                 }
-                else if(joystick.Vertical <= -0.4f){
+                else if(joystick.Vertical <= -0.2f){
                     h=0;
                 }
                 counter = 0;
             }
-            else if (joystick.Horizontal <= -0.4f){
+            else if (joystick.Horizontal <= -0.2f){
                 v = 1;
                 h = -1;
-                if (joystick.Vertical >= 0.4f){
+                if (joystick.Vertical >= 0.2f){
                     h=0;
                 }
                 else if(joystick.Vertical <= -0.2f){
@@ -93,11 +94,17 @@ public class InputController : MonoBehaviour
         bool input = Input.GetKeyDown(KeyCode.W);
         bool input2 = Input.GetKeyDown(KeyCode.E);
 
+        if (Input.touchCount > 0)
+        {   
+            t = Input.GetTouch(0);
+            OnClick(null, t);
+        }/*
+
         if(input){
             OnClick(null, 1);
         }
         if(input2){
             OnClick(null, 2);
-        }
+        }*/
     }
 }

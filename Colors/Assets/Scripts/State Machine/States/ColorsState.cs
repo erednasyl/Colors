@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColorsState : MonoBehaviour
+public class ColorsState : RoamState
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public override void OnClick(object sender, object args){
+        int button = (int) args;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (button == 1){
+            Debug.Log("PEW PEW!");
+        }
+
+        else if (button == 2){
+            Debug.Log("Masdasdorreu!");
+        }
     }
 }

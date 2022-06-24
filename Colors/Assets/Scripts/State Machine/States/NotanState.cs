@@ -8,7 +8,7 @@ public class NotanState : RoamState
         int button = (int) args;
 
         if (button == 1){
-            Debug.Log("sffasf!");
+            Debug.Log("PEW PEW!");
         }
 
         else if (button == 2){

@@ -33,15 +33,15 @@ public class RoamState : State
     }
 
     public virtual void OnClick(object sender, object args){
-        int button = (int) args;
-
-        if (button == 1){
+        Touch touch = (Touch) args;
+        Vector3 pos;
+        GameObject bullet;
+        if (touch.phase == TouchPhase.Began){
             Debug.Log("Atirou!");
-        }
-
-        else if (button == 2){
-            Debug.Log("Morreu!");
-            StateMachineController.instance.ChangeTo<NotanState>();
+            bullet = Instantiate(PlayerController.instance.bulletPrefab, PlayerController.instance.transform.position, PlayerController.instance.transform.rotation);
+            pos = Camera.main.ScreenToWorldPoint(touch.position);
+            Debug.Log(pos);
+            LeanTween.move(bullet, pos,0.2f);
         }
     }
 }
