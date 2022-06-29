@@ -13,7 +13,7 @@ public class LoadState : State
         //
         //
         yield return null;
-        StateMachineController.instance.ChangeTo<RoamState>();
+        StateMachineController.instance.ChangeTo<NotanState>();
     }
 
 }

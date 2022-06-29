@@ -8,7 +8,7 @@ public class InputController : MonoBehaviour
     int h;
     int v;
     float counter = 0f;
-    float cooldownTimer = 0.2f;
+    float cooldownTimer = 0.3f;
     Touch t;
 
     public static InputController instance;
@@ -28,45 +28,57 @@ public class InputController : MonoBehaviour
         counter+= Time.deltaTime;
         if (counter >= cooldownTimer){
             if (joystick.Vertical >= 0.2f){
+                PlayerController.instance.spriteRenderer.sprite = PlayerController.instance.spriteList[4];
                 v = 1;
                 h = 1;
                 if (joystick.Horizontal >= 0.2f){
+                    PlayerController.instance.spriteRenderer.sprite = PlayerController.instance.spriteList[3];
                     v=0;
                 }
                 else if(joystick.Horizontal <= -0.2f){
+                    PlayerController.instance.spriteRenderer.sprite = PlayerController.instance.spriteList[5];
                     h=0;
                 }
                 counter = 0;
             }
             else if (joystick.Vertical <= -0.2f){
+                PlayerController.instance.spriteRenderer.sprite = PlayerController.instance.spriteList[0];
                 v = -1;
                 h = -1;
                 if (joystick.Horizontal >= 0.2f){
+                    PlayerController.instance.spriteRenderer.sprite = PlayerController.instance.spriteList[1];
                     h=0;
                 }
                 else if(joystick.Horizontal <= -0.2f){
+                    PlayerController.instance.spriteRenderer.sprite = PlayerController.instance.spriteList[7];
                     v=0;
                 }
                 counter = 0;
             }
             else if (joystick.Horizontal >= 0.2f){
+                PlayerController.instance.spriteRenderer.sprite = PlayerController.instance.spriteList[2];
                 v = -1;
                 h = 1;
                 if (joystick.Vertical >= 0.2f){
+                    PlayerController.instance.spriteRenderer.sprite = PlayerController.instance.spriteList[3];
                     v=0;
                 }
                 else if(joystick.Vertical <= -0.2f){
+                    PlayerController.instance.spriteRenderer.sprite = PlayerController.instance.spriteList[1];
                     h=0;
                 }
                 counter = 0;
             }
             else if (joystick.Horizontal <= -0.2f){
+                PlayerController.instance.spriteRenderer.sprite = PlayerController.instance.spriteList[6];
                 v = 1;
                 h = -1;
                 if (joystick.Vertical >= 0.2f){
+                    PlayerController.instance.spriteRenderer.sprite = PlayerController.instance.spriteList[5];
                     h=0;
                 }
                 else if(joystick.Vertical <= -0.2f){
+                    PlayerController.instance.spriteRenderer.sprite = PlayerController.instance.spriteList[7];
                     v=0;
                 }
                 counter = 0;

@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public Vector3Int position;
     [HideInInspector]
     public SpriteRenderer spriteRenderer;
-    
+    public Sprite[] spriteList;
     public GameObject bulletPrefab;
 
     void Awake(){
