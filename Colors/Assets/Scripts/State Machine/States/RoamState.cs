@@ -17,19 +17,8 @@ public class RoamState : State
     }
 
     void OnMove(object sender, object args){
-        Vector3Int input = (Vector3Int)args;
-        TileLogic t = Board.GetTile(PlayerController.instance.position + input);
-
-        if(t!=null){
-            if(PlayerController.instance.tile != null){
-                if(PlayerController.instance.tile.floor != t.floor){
-                    Debug.Log("Jump!");
-                }}
-            PlayerController.instance.position = t.pos;
-            PlayerController.instance.tile = t;
-            PlayerController.instance.spriteRenderer.sortingOrder = t.contentOrder;
-            LeanTween.move(PlayerController.instance.transform.gameObject, t.worldPos, 0.3f);
-        }
+        Vector2 input = (Vector2)args;
+        PlayerController.instance.rb.velocity = new Vector2(input.x*4f, input.y*4f);
     }
 
     public virtual void OnClick(object sender, object args){

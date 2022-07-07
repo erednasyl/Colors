@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class ColorsState : RoamState
 {
@@ -50,8 +52,27 @@ public class ColorsState : RoamState
                     GameManager.Instance.volume.profile = GameManager.Instance.currentProfile;
                     if (hit.collider.CompareTag("Player"))
                     {
+                        MapManager.Instance.isNotan = true;
                         StateMachineController.instance.ChangeTo<NotanState>();
                         ShowOnColors.Instance.Disable();
+                        
+                        //set lights
+                        GameManager.Instance.main.backgroundColor = Color.black;
+
+                        GameManager.Instance.globalLight.color = new Color(0.91509403f, 0.9039948f, 0.876246f, 1);
+                        foreach (GameObject light in GameManager.Instance.pointLights)
+                        {
+                            light.GetComponent<Light2D>().intensity = 1f;
+                            light.SetActive(false);
+                        }
+
+                        //set tiles to black
+                        foreach (var tilePos in MapManager.Instance.tiles){
+                            TileBase currTile = MapManager.Instance.map.GetTile(tilePos);
+
+                            TileBase realTile = MapManager.Instance.dataFromTiles[currTile].realTile;
+                            MapManager.Instance.map.SetTile(tilePos, realTile);
+                        }
                     }
                 }
 

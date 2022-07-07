@@ -6,6 +6,8 @@ public class NotanState : RoamState
 {
     void Awake(){
         Debug.Log("NOTAN ON!");
+        GameManager.Instance.globalLight.color = new Color(0.91509403f, 0.9039948f, 0.876246f, 1);
+        MapManager.Instance.isNotan = true;
     }
 
     public override void OnClick(object sender, object args){
@@ -51,7 +53,13 @@ public class NotanState : RoamState
                     GameManager.Instance.volume.profile = GameManager.Instance.currentProfile;
                     if (hit.collider.CompareTag("Player"))
                     {
+                        MapManager.Instance.isNotan = false;
                         StateMachineController.instance.ChangeTo<ChiaroscuroState>();
+                        GameManager.Instance.globalLight.color = Color.black;
+                        foreach (GameObject light in GameManager.Instance.pointLights)
+                        {
+                            light.SetActive(true);
+                        }
                     }
                 }
 

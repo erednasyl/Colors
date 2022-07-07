@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Tilemaps;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class ChiaroscuroState : RoamState
 {
@@ -53,8 +55,28 @@ public class ChiaroscuroState : RoamState
 
                     if (hit.collider.CompareTag("Player"))
                     {
+                        MapManager.Instance.isNotan = false;
                         StateMachineController.instance.ChangeTo<ColorsState>();
                         ShowOnColors.Instance.Setup();
+
+                        //set camera color
+                        GameManager.Instance.main.backgroundColor = new Color(0.6759078f, 0.7830189f, 0.7758349f, 1);
+
+                        //set global light
+                        GameManager.Instance.globalLight.color = new Color(0.8415806f, 0.8768347f, 0.913f, 1);
+
+                        foreach (GameObject light in GameManager.Instance.pointLights)
+                        {
+                            light.GetComponent<Light2D>().intensity = 0.2f;
+                        }
+
+                        //set tiles to color
+                        foreach (var tilePos in MapManager.Instance.tiles){
+                            TileBase currTile = MapManager.Instance.map.GetTile(tilePos);
+
+                            TileBase realTile = MapManager.Instance.dataFromTiles[currTile].realTile;
+                            MapManager.Instance.map.SetTile(tilePos, realTile);
+                        }
                     }
                 }
             }

@@ -11,9 +11,11 @@ public class PlayerController : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Sprite[] spriteList;
     public GameObject bulletPrefab;
+    public Rigidbody2D rb;
 
     void Awake(){
         instance = this;
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
     }
 }

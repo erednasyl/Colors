@@ -9,7 +9,7 @@ public class LoadState : State
     }
 
     IEnumerator LoadSequence(){
-        yield return Board.instance.InitSequence(this);
+        //yield return Board.instance.InitSequence(this);
         //
         //
         yield return null;
