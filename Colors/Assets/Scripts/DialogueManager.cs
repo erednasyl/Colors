@@ -14,6 +14,8 @@ public class DialogueManager : MonoBehaviour
     public GameObject toggles;
     public GameObject joystick;
 
+    [SerializeField] int actionOverDeactive;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,8 +24,11 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue){
         dialogueBox.SetActive(true);
-        toggles.SetActive(true);
-        joystick.SetActive(false);
+        if (toggles != null && joystick != null)
+        {
+            toggles.SetActive(true);
+            joystick.SetActive(false);
+        }
 
         nameText.text = dialogue.name;
         sentences.Clear();
@@ -49,7 +54,20 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue(){
         dialogueBox.SetActive(false);
-        toggles.SetActive(false);
-        joystick.SetActive(true);
+        StartCoroutine(actOverDeactive());
+        if (toggles!= null && joystick != null)
+        {
+            toggles.SetActive(false);
+            joystick.SetActive(true);
+        }
+
+    }
+
+    IEnumerator actOverDeactive(){
+        yield return null;
+        if (actionOverDeactive == 1)
+            {
+                SceneTransitions.signalToChange = 1;
+            }
     }
 }

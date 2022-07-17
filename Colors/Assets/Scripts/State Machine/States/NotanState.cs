@@ -23,7 +23,10 @@ public class NotanState : RoamState
                 bullet = Instantiate(PlayerController.instance.bulletPrefab, PlayerController.instance.transform.position, PlayerController.instance.transform.rotation);
                 pos = Camera.main.ScreenToWorldPoint(touch.position);
                 pos.z = 0;
+
+                //COLOCAR ISSO DENTRO DO AWAKE DA BALA
                 LeanTween.move(bullet, pos,0.1f);
+                //------
 
                 //SwitchingPlayer
                 Vector3 screenTouchFar = new Vector3(
@@ -55,11 +58,7 @@ public class NotanState : RoamState
                     {
                         MapManager.Instance.isNotan = false;
                         StateMachineController.instance.ChangeTo<ChiaroscuroState>();
-                        GameManager.Instance.globalLight.color = Color.black;
-                        foreach (GameObject light in GameManager.Instance.pointLights)
-                        {
-                            light.SetActive(true);
-                        }
+                        ChangeColors.Instance.ToChiao();
                     }
                 }
 

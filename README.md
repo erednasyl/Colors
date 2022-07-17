@@ -1,3 +1,3 @@
 Colors
 
-Educational game project for Optics and Color Theory.
+Educational game project about Optics and Color Theory.
