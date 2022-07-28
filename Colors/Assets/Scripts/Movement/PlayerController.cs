@@ -13,9 +13,20 @@ public class PlayerController : MonoBehaviour
     public GameObject bulletPrefab;
     public Rigidbody2D rb;
 
+    public ShowOnGameOver gameOverScreen;
     void Awake(){
         instance = this;
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    void OnTriggerEnter2D(Collider2D col){
+        if (col.CompareTag("Portal"))
+        {
+            if (gameOverScreen != null)
+            {
+                gameOverScreen.Setup();
+            }
+        }
     }
 }

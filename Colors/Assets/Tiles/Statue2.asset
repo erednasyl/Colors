@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2530b759be13bee43a2dbf8dcb6f94bd, type: 3}
+  m_Name: Statue2
+  m_EditorClassIdentifier: 
+  tiles:
+  - {fileID: 11400000, guid: 683bdbd282f228642ab4cb6a82701c38, type: 2}
+  nextTile: {fileID: 11400000, guid: 629efc58ce43fa34783f29fb0b62dc28, type: 2}
+  realTile: {fileID: 11400000, guid: ae4c2f71abb2c0f4f9187302e20b2d47, type: 2}
+  isWalkable: 0
+  isSwappable: 0
+  movSpeed: 0

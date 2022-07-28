@@ -16,9 +16,12 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] int actionOverDeactive;
 
+    public static bool isEventDialogue;
+
     // Start is called before the first frame update
     void Start()
     {
+        isEventDialogue = false;
         sentences = new Queue<string>();
     }
 

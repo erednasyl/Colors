@@ -54,8 +54,8 @@ public class ChiaroscuroState : RoamState
                     {
                         MapManager.Instance.isNotan = false;
                         StateMachineController.instance.ChangeTo<ColorsState>();
-                        ShowOnColors.Instance.Setup();
-                        ChangeColors.Instance.ToColor();
+                        //ShowOnColors.Instance.Setup();
+                        MapManager.Instance.ToColor();
                     }
                 }
             }

@@ -19,6 +19,8 @@ public class BulletBehavior : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         Debug.Log("OnCollisionEnter2D");
+        if (col.gameObject.CompareTag("Enemy"))
+            Destroy(col.gameObject);
         //explosão HITEI ALGO!
         /*
         Instantiate(hitExplosion, transform.position, Quaternion.identity);

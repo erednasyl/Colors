@@ -52,8 +52,8 @@ public class ColorsState : RoamState
                     {
                         MapManager.Instance.isNotan = true;
                         StateMachineController.instance.ChangeTo<NotanState>();
-                        ShowOnColors.Instance.Disable();
-                        ChangeColors.Instance.ToNotan();
+                        //ShowOnColors.Instance.Disable();
+                        MapManager.Instance.ToNotan();
                     }
                 }
 

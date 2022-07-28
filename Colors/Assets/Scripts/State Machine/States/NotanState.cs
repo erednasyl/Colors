@@ -58,7 +58,7 @@ public class NotanState : RoamState
                     {
                         MapManager.Instance.isNotan = false;
                         StateMachineController.instance.ChangeTo<ChiaroscuroState>();
-                        ChangeColors.Instance.ToChiao();
+                        MapManager.Instance.ToChiao();
                     }
                 }
 

@@ -11,19 +11,19 @@ public class ColorCinematicControl : MonoBehaviour
     {
         if (currColorState == 1 && isChangeable)
         {
-            ChangeColors.Instance.ToNotan();
+            MapManager.Instance.ToNotan();
         }    
 
 
         if (currColorState == 2 && isChangeable)
         {
-            ChangeColors.Instance.ToChiao();
+            MapManager.Instance.ToChiao();
         }    
 
 
         if (currColorState == 3 && isChangeable)
         {
-            ChangeColors.Instance.ToColor();
+            MapManager.Instance.ToColor();
         }        
     }
 }
